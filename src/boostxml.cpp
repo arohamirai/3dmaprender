@@ -24,18 +24,6 @@ void usage()
     cout<<"argv[1]:"<<"*.xml file path"<<endl;
 }
 
-void build_transform_tree(typename boost::adjacency_list<boost::vecS,
-                          boost::vecS,
-                          boost::bidirectionalS,
-                          VertexData,
-                          boost::property<boost::edge_weight_t, double, EdgeData>
-                          > &g, std::list<int> &transform_tree)
-{
- return;
-}
-
-
-
 int main(int argc, char** argv)
 {
     if(argc != 2)
@@ -155,8 +143,7 @@ std:;string map_filepath = argv[1];
     // build the transform tree
     auto vertex_property = boost::get(&VertexData::node_id,g);
     boost::graph_traits < Graph >::vertex_iterator vi, vend;
-    std::list<std::list<int>> transform_trees;
-    int debug_idx = 0;
+    std::map<int, std::list<int>> transform_trees;
     for (boost::tie(vi, vend) = boost::vertices(g); vi != vend; ++vi)
     {
        std::list<int> transform_tree;
@@ -173,22 +160,24 @@ std:;string map_filepath = argv[1];
             }
             else
             {
-                debug_idx = 0;
                 break;
             }
         }
-        transform_trees.push_back(transform_tree);
+        transform_trees[transform_tree.back()] = transform_tree;
     }
-    //
+
 //    for(auto it = transform_trees.cbegin(); it != transform_trees.cend(); it++)
 //    {
-//        auto transform_tree = *it;
+//        auto transform_tree = (*it).second;
 //         for(auto it_t = transform_tree.cbegin(); it_t != transform_tree.cend(); it_t++)
 //         {
 //             cout<<*it_t<<"-";
 //         }
 //         cout<<endl;
 //    }
+
+    // get matrix
+
 
 
 
